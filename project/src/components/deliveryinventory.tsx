@@ -25,25 +25,31 @@ import {
 } from "@/utils/components/ui/select";
 import Link from "next/link";
 import axios from "axios";
-// Mock data for delivery tasks
 
 export function DeliveryManagement() {
   const [deliveries, setDeliveries] = useState([]);
 
-  const fetchdelivery = async () => {
-    const response = await axios.get(
-      "http://localhost:3000/api/delivery/fetch"
-    );
-    console.log(response.data);
-    setDeliveries(response.data);
+  // Fetch delivery data from API
+  const fetchDelivery = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/api/delivery/fetch"
+      );
+      console.log(response.data);
+      setDeliveries(response.data);
+    } catch (error) {
+      console.error("Error fetching delivery data:", error);
+    }
   };
+
   useEffect(() => {
-    fetchdelivery();
+    fetchDelivery();
   }, []);
 
+  // Update delivery status
   const updateDeliveryStatus = (deliveryId: number, newStatus: string) => {
-    setDeliveries(
-      deliveries.map((delivery) =>
+    setDeliveries((prevDeliveries) =>
+      prevDeliveries.map((delivery) =>
         delivery.id === deliveryId
           ? { ...delivery, status: newStatus }
           : delivery
@@ -56,7 +62,6 @@ export function DeliveryManagement() {
       <CardHeader>
         <CardTitle>Delivery Management</CardTitle>
         <Link href="/createdelivery">
-          {" "}
           <Button size="sm">Add Delivery</Button>
         </Link>
       </CardHeader>
@@ -73,8 +78,8 @@ export function DeliveryManagement() {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {deliveries.map((delivery) => (
-              <TableRow>
+            {deliveries.map((delivery, index) => (
+              <TableRow key={delivery.id || index}>
                 <TableCell>{delivery.mealBoxId}</TableCell>
                 <TableCell>{delivery.patientName}</TableCell>
                 <TableCell>{delivery.roomNumber}</TableCell>
