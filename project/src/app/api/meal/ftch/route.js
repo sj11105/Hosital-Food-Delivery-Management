@@ -1,19 +1,11 @@
-import { MealModel } from "@/app/api/utils/db";
+import { CLIENT_STATIC_FILES_RUNTIME_MAIN_APP } from "next/dist/shared/lib/constants";
+import { MealModel } from "../../utils/db";
 
 export async function GET(request) {
   try {
-    const { staffId, role } = await request.json();
-
-    // Fetch tasks based on staff role (Pantry Staff or Delivery Personnel)
-    const query =
-      role === "Pantry Staff"
-        ? { assignedTo: staffId }
-        : { deliveryPersonnel: staffId };
-
-    const tasks = await MealModel.find(query).populate("patientId");
-
+    const fetchedmeal = await MealModel.find({});
     return new Response(
-      JSON.stringify({ message: "Tasks fetched successfully", tasks }),
+      JSON.stringify({ message: "Tasks fetched successfully", fetchedmeal }),
       {
         status: 200,
         headers: { "Content-Type": "application/json" },

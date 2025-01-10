@@ -4,17 +4,28 @@ mongoose.connect("mongodb://localhost:27017/hospital");
 
 // Patient Schema
 const patientSchema = mongoose.Schema({
-  name: String,
-  Dieseas: String,
-  Allergies: String,
-  Age: Number,
-  Gender: String,
-  Contact: Number,
-  Emergency: Number,
+  name: { type: String, required: true },
+  disease: { type: String, required: true }, // Corrected from Dieseas to disease
+  allergies: { type: String, required: false }, // Optional field
+  age: { type: Number, required: true }, // Ensure this is a Number
+  gender: { type: String, required: true }, // Ensure this is a String
+  contact: { type: Number, required: true }, // Changed to String to match input
+  emergency: { type: Number, required: true }, // Changed to String to match input
   roomInfo: {
-    roomNumber: Number,
-    bedNumber: Number,
-    floorNumber: Number,
+    roomNumber: { type: Number, required: true }, // Changed to String to match input
+    bedNumber: { type: Number, required: true }, // Changed to String to match input
+    floorNumber: { type: Number, required: true }, // Changed to String to match input
+  },
+});
+
+const UserSchema = mongoose.Schema({
+  name: { type: String, required: true },
+  email: { type: String, unique: true, required: true },
+  password: { type: String, required: true },
+  role: {
+    type: String,
+    enum: ["manager", "pantry", "delivery"],
+    required: true,
   },
 });
 
@@ -52,6 +63,17 @@ const MealSchema = mongoose.Schema({
   deliveryPersonnel: { type: mongoose.Schema.Types.ObjectId, ref: "Staff" }, // Reference to delivery personnel
   createdAt: { type: Date, default: Date.now },
 });
+const DeliverySchema = mongoose.Schema({
+  mealBoxId: String,
+  patientName: String,
+  roomNumber: String,
+  assignedTo: String,
+  status: {
+    type: String,
+    enum: ["Pending", "In Progress", "Delivered"],
+    default: "Pending",
+  },
+});
 
 // DietChart Schema
 const DietChartSchema = mongoose.Schema({
@@ -79,6 +101,9 @@ const MealBoxmodel =
 const Dietmodel =
   mongoose.models.Diet || mongoose.model("Diet", DietChartSchema);
 const MealModel = mongoose.models.Meal || mongoose.model("Meal", MealSchema);
+const DeliveryModel =
+  mongoose.models.Delivery || mongoose.model("Delivery", DeliverySchema);
+const Usermodel = mongoose.models.User || mongoose.model("User", UserSchema);
 
 module.exports = {
   patientModel,
@@ -86,4 +111,6 @@ module.exports = {
   Dietmodel,
   Staffmodel,
   MealModel,
+  DeliveryModel,
+  Usermodel,
 };

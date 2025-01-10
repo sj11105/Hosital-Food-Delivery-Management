@@ -5,16 +5,16 @@ import axios from "axios";
 const CompactPatientForm = () => {
   const [formData, setFormData] = useState({
     name: "",
-    disease: "",
-    allergies: "",
-    age: "",
-    gender: "",
-    contact: "",
-    emergency: "",
-    roominfo: {
+    disease: "", // Changed from Disease to disease
+    allergies: "", // Changed from Allergies to allergies
+    age: "", // Changed from Age to age
+    gender: "", // Changed from Gender to gender
+    contact: "", // Changed from Contact to contact
+    emergency: "", // Changed from Emergency to emergency
+    roomInfo: {
       roomNumber: "",
-      bednumber: "",
-      floornumber: "",
+      bedNumber: "",
+      floorNumber: "",
     },
   });
 
@@ -22,10 +22,10 @@ const CompactPatientForm = () => {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    if (name in formData.roominfo) {
+    if (name in formData.roomInfo) {
       setFormData((prev) => ({
         ...prev,
-        roominfo: { ...prev.roominfo, [name]: value },
+        roomInfo: { ...prev.roomInfo, [name]: value }, // Corrected roominfo to roomInfo
       }));
     } else {
       setFormData((prev) => ({
@@ -77,7 +77,7 @@ const CompactPatientForm = () => {
             <label className="block text-gray-700 text-sm mb-1">Disease</label>
             <input
               type="text"
-              name="disease"
+              name="disease" // Changed from Disease to disease
               value={formData.disease}
               onChange={handleChange}
               placeholder="E.g., Diabetes"
@@ -92,7 +92,7 @@ const CompactPatientForm = () => {
             </label>
             <input
               type="text"
-              name="allergies"
+              name="allergies" // Changed from Allergies to allergies
               value={formData.allergies}
               onChange={handleChange}
               placeholder="E.g., Pollen"
@@ -105,7 +105,7 @@ const CompactPatientForm = () => {
             <label className="block text-gray-700 text-sm mb-1">Age</label>
             <input
               type="number"
-              name="age"
+              name="age" // Changed from Age to age
               value={formData.age}
               onChange={handleChange}
               placeholder="Age"
@@ -118,7 +118,7 @@ const CompactPatientForm = () => {
           <div>
             <label className="block text-gray-700 text-sm mb-1">Gender</label>
             <select
-              name="gender"
+              name="gender" // Changed from Gender to gender
               value={formData.gender}
               onChange={handleChange}
               className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
@@ -135,8 +135,8 @@ const CompactPatientForm = () => {
           <div>
             <label className="block text-gray-700 text-sm mb-1">Contact</label>
             <input
-              type="tel"
-              name="contact"
+              type="number"
+              name="contact" // Changed from Contact to contact
               value={formData.contact}
               onChange={handleChange}
               placeholder="E.g., 9876543210"
@@ -151,8 +151,8 @@ const CompactPatientForm = () => {
               Emergency
             </label>
             <input
-              type="tel"
-              name="emergency"
+              type="number"
+              name="emergency" // Changed from Emergency to emergency
               value={formData.emergency}
               onChange={handleChange}
               placeholder="Emergency Contact"
@@ -170,7 +170,7 @@ const CompactPatientForm = () => {
               <input
                 type="number"
                 name="roomNumber"
-                value={formData.roominfo.roomNumber}
+                value={formData.roomInfo.roomNumber}
                 onChange={handleChange}
                 placeholder="101"
                 className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
@@ -182,8 +182,8 @@ const CompactPatientForm = () => {
               </label>
               <input
                 type="number"
-                name="bednumber"
-                value={formData.roominfo.bednumber}
+                name="bedNumber"
+                value={formData.roomInfo.bedNumber}
                 onChange={handleChange}
                 placeholder="B1"
                 className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition"
@@ -195,8 +195,8 @@ const CompactPatientForm = () => {
               </label>
               <input
                 type="number"
-                name="floornumber"
-                value={formData.roominfo.floornumber}
+                name="floorNumber"
+                value={formData.roomInfo.floorNumber}
                 onChange={handleChange}
                 placeholder="2nd"
                 className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-400 transition"

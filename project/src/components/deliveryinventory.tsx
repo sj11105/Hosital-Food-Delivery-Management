@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -23,37 +23,23 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/utils/components/ui/select";
-
+import Link from "next/link";
+import axios from "axios";
 // Mock data for delivery tasks
-const mockDeliveries = [
-  {
-    id: 1,
-    mealBoxId: "MB001",
-    patientName: "John Doe",
-    roomNumber: "101",
-    assignedTo: "Alice",
-    status: "Pending",
-  },
-  {
-    id: 2,
-    mealBoxId: "MB002",
-    patientName: "Jane Smith",
-    roomNumber: "202",
-    assignedTo: "Bob",
-    status: "In Transit",
-  },
-  {
-    id: 3,
-    mealBoxId: "MB003",
-    patientName: "Alice Johnson",
-    roomNumber: "303",
-    assignedTo: "Charlie",
-    status: "Delivered",
-  },
-];
 
 export function DeliveryManagement() {
-  const [deliveries, setDeliveries] = useState(mockDeliveries);
+  const [deliveries, setDeliveries] = useState([]);
+
+  const fetchdelivery = async () => {
+    const response = await axios.get(
+      "http://localhost:3000/api/delivery/fetch"
+    );
+    console.log(response.data);
+    setDeliveries(response.data);
+  };
+  useEffect(() => {
+    fetchdelivery();
+  }, []);
 
   const updateDeliveryStatus = (deliveryId: number, newStatus: string) => {
     setDeliveries(
@@ -69,6 +55,10 @@ export function DeliveryManagement() {
     <Card>
       <CardHeader>
         <CardTitle>Delivery Management</CardTitle>
+        <Link href="/createdelivery">
+          {" "}
+          <Button size="sm">Add Delivery</Button>
+        </Link>
       </CardHeader>
       <CardContent>
         <Table>
@@ -84,7 +74,7 @@ export function DeliveryManagement() {
           </TableHeader>
           <TableBody>
             {deliveries.map((delivery) => (
-              <TableRow key={delivery.id}>
+              <TableRow>
                 <TableCell>{delivery.mealBoxId}</TableCell>
                 <TableCell>{delivery.patientName}</TableCell>
                 <TableCell>{delivery.roomNumber}</TableCell>

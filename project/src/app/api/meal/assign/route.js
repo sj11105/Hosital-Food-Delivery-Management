@@ -1,15 +1,23 @@
-import { MealModel } from "@/app/api/utils/db";
-import { Staffmodel } from "@/app/api/utils/db";
+import { MealModel } from "../../utils/db";
+import { Staffmodel } from "../../utils/db";
 
 export async function POST(request) {
   try {
-    const { mealType, patientId, preparationStaffId, deliveryStaffId } =
-      await request.json();
+    const {
+      patientId,
+      mealType,
+      preparationStatus,
+      deliveryStatus,
+      preparationStaffId,
+      deliveryStaffId,
+    } = await request.json();
 
     // Create a new meal task
     const meal = await MealModel.create({
       patientId,
       mealType,
+      preparationStatus,
+      deliveryStatus,
       assignedTo: preparationStaffId,
       deliveryPersonnel: deliveryStaffId,
     });

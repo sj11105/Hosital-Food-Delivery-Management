@@ -1,3 +1,6 @@
+"use client";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Card,
   CardContent,
@@ -6,6 +9,29 @@ import {
 } from "@/utils/components/ui/card";
 
 export function AlertsAnalytics() {
+  const [analyticsData, setAnalyticsData] = useState({
+    totalMealsDelivered: 0,
+    delayedDeliveries: 0,
+    onTimeDeliveries: 0,
+    preparationIssues: 0,
+  });
+
+  const fetchAnalyticsData = async () => {
+    try {
+      const response = await axios.get(
+        "http://localhost:3000/api/meal/analytics"
+      );
+      console.log(response.data);
+      setAnalyticsData(response.data);
+    } catch (error) {
+      console.error("Error fetching analytics data:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchAnalyticsData();
+  }, []);
+
   return (
     <Card>
       <CardHeader>
@@ -20,7 +46,9 @@ export function AlertsAnalytics() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">89</div>
+              <div className="text-2xl font-bold">
+                {analyticsData.totalMealsDelivered}
+              </div>
             </CardContent>
           </Card>
           <Card>
@@ -30,7 +58,9 @@ export function AlertsAnalytics() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">3</div>
+              <div className="text-2xl font-bold">
+                {analyticsData.delayedDeliveries}
+              </div>
             </CardContent>
           </Card>
           <Card>
@@ -40,7 +70,9 @@ export function AlertsAnalytics() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">86</div>
+              <div className="text-2xl font-bold">
+                {analyticsData.onTimeDeliveries}
+              </div>
             </CardContent>
           </Card>
           <Card>
@@ -50,7 +82,9 @@ export function AlertsAnalytics() {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">1</div>
+              <div className="text-2xl font-bold">
+                {analyticsData.preparationIssues}
+              </div>
             </CardContent>
           </Card>
         </div>
