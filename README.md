@@ -46,7 +46,8 @@ npm start
 cd ../client
 npm start
 
-Future Plans
+Future Plans:
+
 Here are a few ideas we’d love to add in the future:
 
 Notifications for missed or delayed meals
