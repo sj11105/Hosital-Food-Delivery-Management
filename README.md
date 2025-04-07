@@ -18,33 +18,19 @@ Backend: Node.js + Express
 
 Database: MongoDB
 
-Getting Started
+Run Locally
+Clone the project
 
-1. Clone the Repository
-git clone https://github.com/yourusername/hospital-food-delivery.git
+ git clone https://github.com/yourusername/hospital-food-delivery.git
 cd hospital-food-delivery
 
-2. Set Up the Backend
 cd server
-npm install
+Install dependencies
 
-3)Add a .env file inside the server folder:
-MONGO_URI=your_mongodb_connection_string
-PORT=5000
+  npm install
+Start the server
 
-4) Set Up the Frontend
-cd ../client
-npm install
-
-5) Run the App
-Start the backend:
-cd ../server
-npm start
-
-6)Start the frontend:
-
-cd ../client
-npm start
+  npm run start
 
 Future Plans:
 
