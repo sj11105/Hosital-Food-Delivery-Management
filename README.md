@@ -42,13 +42,19 @@ cd ../server
 npm start
 
 6)Start the frontend:
+
 cd ../client
 npm start
 
 Future Plans
 Here are a few ideas we’d love to add in the future:
+
 Notifications for missed or delayed meals
+
 Login system with roles for doctors, kitchen staff, and admins
+
 Mobile-friendly layout
+
 Meal analytics (most prescribed diets, delivery efficiency, etc.)
+
 Integration with hospital record systems
